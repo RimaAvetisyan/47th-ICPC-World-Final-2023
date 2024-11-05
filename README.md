@@ -6,23 +6,18 @@
 
 ## Solution
 
-```cpp
-#include <iomanip>
-#include <iostream>
-using namespace std;
-
-int main() {
-  int n, m;
-  while (cin >> n >> m) {
-    int a, tot = 0;
-    for (int i = 0; i < n*m; i++) {
-      cin >> a;
-      tot += a;
-    }
-    cout << fixed << setprecision(9) << (long double)(tot) / (n*m) << endl;
-  }
-  return 0;
-}
+```py
+while True:
+    try:
+        n, m = map(int, input().split())
+        total = 0
+        for _ in range(n * m):
+            a = int(input())
+            total += a
+        average = total / (n * m)
+        print(f"{average:.9f}")
+    except EOFError:
+        break
 ```
 ## Problem B : Schedule
 <img align="center" src="./assets/images/C.png"/>
@@ -30,36 +25,37 @@ int main() {
 
 ### Solution
 
-```cpp
-#include <algorithm>
-#include <iostream>
-#include <vector>
-using namespace std;
+```py
+from itertools import permutations
 
-int main() {
-  int N, W;
-  while (cin >> N >> W) {
-    int c;
-    vector<vector<int>> sch;
-    for (c = 4; c <= W; c++) {
-      sch.clear();
-      vector<int> cur(c, 1);
-      for (int i = c/2; i < c; i++) cur[i] = 2;
-      do {
-        sch.push_back(cur);
-        next_permutation(cur.begin(), cur.end());
-      } while (cur[0] == 1);
-      if (sch.size() >= N) break;
-    }
-    if (c > W) { cout << "infinity" << endl; continue; }
-    cout << c << endl;
-    for (int i = 0; i < W; i++) {
-      for (int j = 0; j < N; j++) cout << sch[j][i%c];
-      cout << endl;
-    }
-  }
-}
+while True:
+    try:
+        N, W = map(int, input().split())
+        c = 4
+        while c <= W:
+            sch = []
+            cur = [1] * (c // 2) + [2] * (c - c // 2)
+            
+            # Use set to eliminate duplicates from permutations
+            for perm in set(permutations(cur)):
+                sch.append(list(perm))
+            
+            if len(sch) >= N:
+                break
+            c += 1
 
+        if c > W:
+            print("infinity")
+            continue
+
+        print(c)
+        for i in range(W):
+            for j in range(N):
+                print(sch[j][i % c], end="")
+            print()
+    
+    except EOFError:
+        break
 ```
 ## Problem H : Jet Lag
 
